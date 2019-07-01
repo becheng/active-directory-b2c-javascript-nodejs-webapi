@@ -9,18 +9,22 @@ var passport = require("passport");
 var BearerStrategy = require('passport-azure-ad').BearerStrategy;
 
 // TODO: Update the first 3 variables
-var tenantID = "fabrikamb2c.onmicrosoft.com";
-var clientID = "25eef6e4-c905-4a07-8eb4-0d08d5df8b3f";
-var policyName = "B2C_1_SUSI";
+var tenantID = "wabbit1317b2c.onmicrosoft.com";
+var clientID = "d4b83df5-0d9c-4ec9-9145-bf6cecdc5630";
+var policyName = "B2C_1_SignUpnInV2";
 
 var options = {
-    identityMetadata: "https://login.microsoftonline.com/" + tenantID + "/v2.0/.well-known/openid-configuration/",
+    //identityMetadata: "https://login.microsoftonline.com/" + tenantID + "/v2.0/.well-known/openid-configuration/",
+    // IMPORTANT NOTE: the issuer authority must be the same for both the web app and the web api 
+    // otherwise the issur will be "invalid".  The original issuer above 'login.microsoft.com' erred out.
+    identityMetadata: "https://wabbit1317b2c.b2clogin.com/" + tenantID + "/v2.0/.well-known/openid-configuration/",
     clientID: clientID,
     policyName: policyName,
     isB2C: true,
     validateIssuer: true,
     loggingLevel: 'info',
-    passReqToCallback: false
+    passReqToCallback: false,
+    //loggingNoPII: false -- use this option to for more verbose logging
 };
 
 var bearerStrategy = new BearerStrategy(options,
